@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Media;
 using Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
-using PptApplication = Microsoft.Office.Interop.PowerPoint.Application;
 
 namespace PowerPointSlideExportDemo
 {
@@ -34,7 +33,7 @@ namespace PowerPointSlideExportDemo
 		{
 			var pngFilePath = Path.Combine(_pngFileBasePath, "SlideWithBackground.png");
 
-			var powerPoint = new PptApplication();
+			var powerPoint = new Microsoft.Office.Interop.PowerPoint.Application();
 			var presentation = powerPoint.Presentations.Open(_pptxFilePath, MsoTriState.msoFalse, MsoTriState.msoFalse, MsoTriState.msoFalse);
 			var slide = presentation.Slides[1]; // one-based!
 			slide.Export(pngFilePath, "PNG", _PngWidth, _PngHeight);
@@ -44,7 +43,7 @@ namespace PowerPointSlideExportDemo
 		{
 			var pngFilePath = Path.Combine(_pngFileBasePath, "SlideWithoutBackground.png");
 
-			var powerPoint = new PptApplication();
+			var powerPoint = new Microsoft.Office.Interop.PowerPoint.Application();
 			var presentation = powerPoint.Presentations.Open(_pptxFilePath, MsoTriState.msoFalse, MsoTriState.msoFalse, MsoTriState.msoFalse);
 			var slide = presentation.Slides[1]; // one-based!
 			var shapes = slide.Shapes;
@@ -52,7 +51,7 @@ namespace PowerPointSlideExportDemo
 			var pageSetup = presentation.PageSetup;
 			var rectangle = shapes.AddShape(MsoAutoShapeType.msoShapeRectangle, 0, 0, pageSetup.SlideWidth, pageSetup.SlideHeight);
 			rectangle.Fill.Visible = MsoTriState.msoFalse;
-			rectangle.Line.Visible = MsoTriState.msoFalse;
+			rectangle.Line.Visible = MsoTriState.msoFalse; 
 
 			var range = shapes.Range();
 			range.Export(
